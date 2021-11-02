@@ -131,44 +131,48 @@ namespace ALazy.Dev.Models
             return arguments;
         }
     }
+    public class ALazyProperties : List<ALazyProperty<ALazyType>> { }
+    public class ALazyMethods : List<ALazyMethod<ALazyType>> { }
+
     namespace Base
     {
-        public abstract class Entity <TKey> where TKey : ALazyType
-        {
-            public TKey ID { get; set; }
-            public bool IsDeleted { get; set; }
-            public int OrgID { get; set; }
-        }
-        public class Thing<TKey> : Entity<TKey> where TKey : ALazyType
-        {
-            public string Name { get; set; }
-            public string Description { get; set; }
-            public string URL { get; set; }
-            public string Image { get; set; }
-            //public string SameAs { get; set; }
-        }
+        //public abstract class Entity <TKey> where TKey : ALazyType
+        //{
+        //    public TKey ID { get; set; }
+        //    public bool IsDeleted { get; set; }
+        //    public int OrgID { get; set; }
+        //}
+        //public class Thing<TKey> : Entity<TKey> where TKey : ALazyType
+        //{
+        //    public string Name { get; set; }
+        //    public string Description { get; set; }
+        //    public string URL { get; set; }
+        //    public string Image { get; set; }
+        //    //public string SameAs { get; set; }
+        //}
         
-        public class Relation<T_Master, T_Slave, T_RKey> 
-            : Entity<T_RKey> where T_RKey : ALazyType where T_Master : Entity<ALazyType> where T_Slave : Entity<ALazyType>
-        { 
-            public T_Master Master { get; set; }
-            public T_Slave Slave { get; set; }
-            public bool UsingMasterSlave { get; set; }
-            public string RelationType { get; set; }
-            public string Payload { get; set; }
-            public int? Order { get; set; }
-            public Relation(T_Master master, T_Slave slave, string relationType = null, bool usingMasterSlave = false)
-            {
-                Master = master;
-                Slave = slave;
-                UsingMasterSlave = usingMasterSlave;
+        //public class Relation<T_Master, T_Slave, T_RKey> 
+        //    : Entity<T_RKey> where T_RKey : ALazyType where T_Master : Entity<ALazyType> where T_Slave : Entity<ALazyType>
+        //{ 
+        //    public T_Master Master { get; set; }
+        //    public T_Slave Slave { get; set; }
+        //    public bool UsingMasterSlave { get; set; }
+        //    public string RelationType { get; set; }
+        //    public string Payload { get; set; }
+        //    public int? Order { get; set; }
+        //    public Relation(T_Master master, T_Slave slave, string relationType = null, bool usingMasterSlave = false)
+        //    {
+        //        Master = master;
+        //        Slave = slave;
+        //        UsingMasterSlave = usingMasterSlave;
 
-                if (!string.IsNullOrWhiteSpace(relationType))
-                {
-                    RelationType = relationType;
-                }
-            }
-        }
+        //        if (!string.IsNullOrWhiteSpace(relationType))
+        //        {
+        //            RelationType = relationType;
+        //        }
+        //    }
+        //}
+
         //public class Relation<T_Master, T_Slave>
         //    : Relation<T_Master, T_Slave, ALazyLongType> where T_Master : Entity<ALazyType> where T_Slave : Entity<ALazyType>
         //{
@@ -184,7 +188,24 @@ namespace ALazy.Dev.Models
     #endregion
 
     #region Back
+    public class ALazyEntity
+    {
+        public Type EntityType { get; set; }
+        public string Name { get; set; }
+        public Type BaseType { get; set; }
+        public string Namespace { get; set; }
 
+        protected ALazyProperties properties { get; set; }
+        protected ALazyMethods methods { get; set; }
+        public string GetMethods() { return ""; }
+        public string GetMethod(string name) { return ""; }
+        public string GetProperties() { return ""; }
+        public string GetProperty(string name) { return ""; }
+        //public string FullName { get; set; }
+        //public string sss { get; set; }
+
+        // IsAbstract IsClass IsPublic
+    }
     #endregion
 
     #region Front
